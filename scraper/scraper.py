@@ -12,7 +12,7 @@ url_location = 'maryland'
 url_race = 'maryland'
 
 dates = {
-    '2018' : '20181013',
+    '2018' : '20180929',
     '2017' : '20171014',
     '2016' : '20161008',
     '2015' : '20151010',
@@ -36,8 +36,7 @@ age_group = [
     '90+Plus'
 ]
 
-url = f'{url_prefix}/{url_distance}/{url_location}/results.aspx?p={url_page}&race={url_race}&rd={url_rd}&agegroup={url_cat}&sex={url_sex}&y={url_y}&ps=20'
-
+'http://www.ironman.com/triathlon/events/americas/ironman/maryland/results.aspx?race=maryland&rd=20180929&y=2018&sex=F&agegroup=30-34&loc='
 
 df = pd.DataFrame()
 df_csv = pd.DataFrame()
@@ -49,7 +48,7 @@ for url_y, url_rd in (dates.items()):
             url_page = 1
             while True:
                 try:
-                    url = f"{url_beg}results.aspx?p={url_page}&race={url_race}&rd={url_rd}&agegroup={url_cat}&sex={url_sex}&y={url_y}&ps=20"
+                    url = f'{url_prefix}/{url_region}/{url_distance}/{url_location}/results.aspx?p={url_page}&race={url_race}&rd={url_rd}&agegroup={url_cat}&sex={url_sex}&y={url_y}&ps=20'
                     website = pd.read_html(url, index_col=None, header=0)
                     df = pd.concat(website)
                     df['Gender'] = url_sex
