@@ -4,6 +4,7 @@ import numpy as np
 
 path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
 file = 'ironman_20181231'
+race_index = 'something.csv'
 
 """
 arg for the race case must be a list in this order:
@@ -65,6 +66,10 @@ class race:
                         url = f'{url_prefix}/{self.url_region}/{self.url_distance}/{self.url_location}/results.aspx?p={url_page}&race={self.url_race}&rd={self.url_date}&agegroup={url_cat}&sex={url_sex}&y={self.url_year}&ps=20'
                         website = pd.read_html(url, index_col=None, header=0)
                         df = pd.concat(website)
+                        df['Distance'] = self.race_distance
+                        df['Race_City'] = self.race_city
+                        df['Race_Country'] = self.race_country
+                        df['Race_Region'] = self.region
                         df['Gender'] = url_sex
                         df['Race_Year'] = self.url_year
                         df['Race_Date'] = self.url_date
@@ -78,4 +83,14 @@ class race:
                         break
 
         df_csv = pd.concat(results)
-        df_csv.to_csv(path+f"{file}.csv", index=False, header=True)
+        return df_csv
+
+
+if __name__ == "__main__":
+
+    df_csv = []
+    for instance in race_index:
+        r = race(instance)
+        df_csv.append(r.scraper())
+
+    df_csv.to_csv(path+f"{file}.csv", index=False, header=True)
