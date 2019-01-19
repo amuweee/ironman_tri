@@ -1,66 +1,96 @@
+
 import pandas as pd
 import numpy as np
 
-path = '/home/amuweee/Dropbox/webscrape/im1406/ALL/'
+path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
+file = 'ironman_20181231'
+race_index = 'something.csv'
 
-url_prefix = 'http://www.ironman.com/triathlon/events/'
+"""
+arg for the race case must be a list in this order:
+
+    1 - race_distance
+    2 - race_city
+    3 - race_country
+    4 - region
+    5 - url_region
+    6 - url_distance
+    7 - url_location
+    8 - url_race
+    9 - url_year
+    10 - url_date
+
+"""
 
 
-url_region = 'americas'
-url_distance = 'ironman'
-url_location = 'maryland'
-url_race = 'maryland'
+class race:
 
-dates = {
-    '2018' : '20180929',
-    '2017' : '20171014',
-    '2016' : '20161008',
-    '2015' : '20151010',
-    '2014' : '20141011',
-    '2013' : '20131012',
-    '2012' : '20121013',
-    '2011' : '20111008',
-}
+    def __init__(self, para):
 
-sex = ['M', 'F']
+        self.race_distance = para[0]
+        self.race_city = para[1]
+        self.race_country = para[2]
+        self.region = para[3]
+        self.url_region = para[4]
+        self.url_distance = para[5]
+        self.url_location = para[6]
+        self.url_race = para[7]
+        self.url_year = para[8]
+        self.url_date = para[9]
 
-age_group = [
-    'Pro',
-    '18-24','25-29',
-    '30-34','35-39',
-    '40-44','45-49',
-    '50-54','55-59',
-    '60-64','65-69',
-    '70-74','75-79',
-    '80-84','85-89',
-    '90+Plus'
-]
 
-'http://www.ironman.com/triathlon/events/americas/ironman/maryland/results.aspx?race=maryland&rd=20180929&y=2018&sex=F&agegroup=30-34&loc='
+    def scraper(self):
 
-df = pd.DataFrame()
-df_csv = pd.DataFrame()
-list = []
+        url_prefix = 'http://www.ironman.com/triathlon/events/'
+        sex = ['M', 'F']
+        age_group = [
+            'Pro',
+            '18-24','25-29',
+            '30-34','35-39',
+            '40-44','45-49',
+            '50-54','55-59',
+            '60-64','65-69',
+            '70-74','75-79',
+            '80-84','85-89',
+            '90+Plus']
 
-for url_y, url_rd in (dates.items()):
-    for url_sex in sex:
-        for url_cat in age_group:
-            url_page = 1
-            while True:
-                try:
-                    url = f'{url_prefix}/{url_region}/{url_distance}/{url_location}/results.aspx?p={url_page}&race={url_race}&rd={url_rd}&agegroup={url_cat}&sex={url_sex}&y={url_y}&ps=20'
-                    website = pd.read_html(url, index_col=None, header=0)
-                    df = pd.concat(website)
-                    df['Gender'] = url_sex
-                    df['Race_Year'] = url_y
-                    df['Race_Date'] = url_rd
-                    df['Race_Name'] = url_race
-                    df['Age_Group'] = url_cat
-                    list.append(df)
-                    print(website)
-                    url_page += 1
-                except ValueError:
-                    print(f'######### End of {url_race}-{url_y}-{url_sex}-{url_cat} #########')
-                    break
-df_csv = pd.concat(list)
-df_csv.to_csv(path+f"{url_race}.csv", index=False, header=True)
+        df = pd.DataFrame()
+        df_csv = pd.DataFrame()
+        results = []
+
+        for url_sex in sex:
+            for url_cat in age_group:
+                url_page = 1
+                while True:
+                    try:
+                        url = f'{url_prefix}/{self.url_region}/{self.url_distance}/{self.url_location}/results.aspx?p={url_page}&race={self.url_race}&rd={self.url_date}&agegroup={url_cat}&sex={url_sex}&y={self.url_year}&ps=20'
+                        website = pd.read_html(url, index_col=None, header=0)
+                        df = pd.concat(website)
+                        df['Distance'] = self.race_distance
+                        df['Race_City'] = self.race_city
+                        df['Race_Country'] = self.race_country
+                        df['Race_Region'] = self.region
+                        df['Gender'] = url_sex
+                        df['Race_Year'] = self.url_year
+                        df['Race_Date'] = self.url_date
+                        df['Race_Name'] = self.url_race
+                        df['Age_Group'] = url_cat
+                        results.append(df)
+                        print(website)
+                        url_page += 1
+                    except ValueError:
+                        print(f'######### End of #########')
+                        break
+
+        df_csv = pd.concat(results)
+        return df_csv
+
+
+if __name__ == "__main__":
+
+    df_csv = []
+    for instance in race_index:
+        r = race(instance)
+        df_csv.append(r.scraper())
+
+    df_csv.to_csv(path+f"{file}.csv", index=False, header=True)
