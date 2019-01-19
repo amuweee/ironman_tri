@@ -1,10 +1,9 @@
-
 import pandas as pd
 import numpy as np
 
 path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
 file = 'ironman_20181231'
-race_index = 'something.csv'
+race_index = 'ironman.csv'
 
 """
 arg for the race case must be a list in this order:
@@ -76,10 +75,9 @@ class race:
                         df['Race_Name'] = self.url_race
                         df['Age_Group'] = url_cat
                         results.append(df)
-                        print(website)
                         url_page += 1
                     except ValueError:
-                        print(f'######### End of #########')
+                        print(f'######### Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat} #########')
                         break
 
         df_csv = pd.concat(results)
@@ -89,7 +87,9 @@ class race:
 if __name__ == "__main__":
 
     df_csv = []
-    for instance in race_index:
+    df_input = pd.read_csv(race_index, header=0)
+    ll = df_input.values.tolist()
+    for instance in ll:
         r = race(instance)
         df_csv.append(r.scraper())
 
