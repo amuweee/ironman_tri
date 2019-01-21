@@ -1,12 +1,15 @@
 import pandas as pd
 import numpy as np
+import time
 
 path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
-file = 'ironman_20181231'
-race_index = 'ironman.csv'
+# path of output file
+
+race_index = 'input.csv'
 
 """
-arg for the race case must be a list in this order:
+arg for the race_index must be a list in this order:
+race_index must be a list of lists
 
     1 - race_distance
     2 - race_city
@@ -19,6 +22,8 @@ arg for the race case must be a list in this order:
     9 - url_year
     10 - url_date
 
+scraper() function will return a DataFrame of all the results
+in the specific dace day
 """
 
 
@@ -37,20 +42,19 @@ class race:
         self.url_year = para[8]
         self.url_date = para[9]
 
-
     def scraper(self):
 
         url_prefix = 'http://www.ironman.com/triathlon/events/'
         sex = ['M', 'F']
         age_group = [
             'Pro',
-            '18-24','25-29',
-            '30-34','35-39',
-            '40-44','45-49',
-            '50-54','55-59',
-            '60-64','65-69',
-            '70-74','75-79',
-            '80-84','85-89',
+            '18-24', '25-29',
+            '30-34', '35-39',
+            '40-44', '45-49',
+            '50-54', '55-59',
+            '60-64', '65-69',
+            '70-74', '75-79',
+            '80-84', '85-89',
             '90+Plus']
 
         df = pd.DataFrame()
@@ -76,6 +80,7 @@ class race:
                         df['Age_Group'] = url_cat
                         results.append(df)
                         url_page += 1
+                        time.sleep(0.5)
                     except ValueError:
                         print(f'######### Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat} #########')
                         break
@@ -86,11 +91,10 @@ class race:
 
 if __name__ == "__main__":
 
-    df_csv = []
     df_input = pd.read_csv(race_index, header=0)
     ll = df_input.values.tolist()
     for instance in ll:
         r = race(instance)
-        df_csv.append(r.scraper())
-
-    df_csv.to_csv(path+f"{file}.csv", index=False, header=True)
+        df_csv = r.scraper()
+        name = f'{instance[5]}_{instance[7]}_{instance[9]}'
+        df_csv.to_csv(path+f"{name}.csv", index=False, header=True)
