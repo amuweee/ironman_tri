@@ -2,14 +2,14 @@ import glob
 import pandas as pd
 import os
 
-date = '20181014'
-path = f'/home/amuweee/Dropbox/webscrape/im1406/ALL/'
-allFiles = glob.glob(path + "*.csv")
-frame = pd.DataFrame()
-list_ = []
-for file_ in allFiles:
-    df = pd.read_csv(file_, index_col=None, header=0)
-    list_.append(df)
-frame = pd.concat(list_)
+path = f'/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
+out_csv = 'ironman_2018.csv'
+all_files = glob.glob(path + "*.csv")
+df = pd.DataFrame()
+l = []
+for file in all_files:
+    df = pd.read_csv(file, index_col=None, header=0)
+    l.append(df)
+merged = pd.concat(l)
 
-frame.to_csv(f'{path}clean/{date}.csv')
+merged.to_csv(path+out_csv)
