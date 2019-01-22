@@ -14,9 +14,9 @@ output will have a sanitized and cleaned csv that will fit right into
 the SQLite database as insert columns
 """
 
-in_path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/database/output_scraped/'
-out_path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/database/sanitized_data/'
-out_csv = 'ironman_2018.csv'
+in_path = '../database/output_scraped/'
+out_path = '../database/sanitized_data/'
+out_csv = 'ironman_all_2018.csv'
 
 
 def merge_csv(in_path):
