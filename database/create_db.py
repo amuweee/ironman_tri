@@ -4,11 +4,11 @@ Creates a localhosted SQLite3 DB
 
 import sqlite3
 
-conn = sqlite3.connect('im_races.db')
+conn = sqlite3.connect(':memory:')
 
 c = conn.cursor()
 
-c.execute("""CREATE TABLE ironman(
+c.execute("""CREATE TABLE IF NOT EXISTS ironman(
 
             )""")
 
