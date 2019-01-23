@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import time
 
-path = '/home/amuweee/Dropbox/Python/git_ironman/ironman_tri/output_scraped/'
+path = '../database/output_scraped/'
 # path of output file
 
 race_index = 'input.csv'
