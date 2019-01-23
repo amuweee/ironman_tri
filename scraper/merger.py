@@ -1,5 +1,6 @@
 import glob as glob
 import pandas as pd
+import numpy as np
 import os
 
 """
@@ -47,10 +48,32 @@ def cleaner(df, out_path, out_csv):
         'Finish': 'Time_Finish',
     })
 
+    # adding DNS/DNF/DQ flags
+    df_rename['Flag_DNS'] = np.where(df_rename['Time_Finish'] == 'DNS', 1, 0)
+    df_rename['Flag_DNF'] = np.where(df_rename['Time_Finish'] == 'DNF', 1, 0)
+    df_rename['Flag_DQ'] = np.where(df_rename['Time_Finish'] == 'DQ', 1, 0)
+
+    # turn '---' into appropriate zeroes
+    df_clean1 = df_rename.replace({
+        'Rank_AG': '---',
+        'Rank_Gender': '---',
+        'Rank_Overall': '---',
+        'Points': '---',
+    }, 0)
+
+    df_clean2 = df_clean1.replace({
+        'Time_Swim': '---',
+        'Time_Bike': '---',
+        'Time_Run': '---',
+        'Time_Finish': '---',
+    }, '00:00:00')
+
+    df_clean3 = df_clean2.replace({'Time_Finish':'DNS'},'00:00:00')
+    df_clean4 = df_clean3.replace({'Time_Finish':'DNF'},'00:00:00')
+    df_end = df_clean4.replace({'Time_Finish':'DQ'},'00:00:00')
 
     # save the cleaned DataFrame to csv at the defined path
     df_end.to_csv(out_path+f"{out_csv}.csv", index=False, header=True)
-
 
 
 if __name__ == "__main__":
