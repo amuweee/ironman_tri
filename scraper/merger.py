@@ -15,9 +15,11 @@ output will have a sanitized and cleaned csv that will fit right into
 the SQLite database as insert columns
 """
 
-in_path = '../database/output_scraped/'
-out_path = '../database/sanitized_data/'
-out_csv = 'ironman_all_2018.csv'
+in_path = '../../output_scraped/'
+out_path = '../../sanitized_data/'
+print("Type the output file name that contains data to export")
+print("make sure to add '.csv' file extension")
+out_csv = input('> ')
 
 
 def merge_csv(in_path):
@@ -73,7 +75,7 @@ def cleaner(df, out_path, out_csv):
     df_end = df_clean4.replace({'Time_Finish':'DQ'},'00:00:00')
 
     # save the cleaned DataFrame to csv at the defined path
-    df_end.to_csv(out_path+f"{out_csv}.csv", index=False, header=True)
+    df_end.to_csv(out_path+out_csv, index=False, header=True)
 
 
 if __name__ == "__main__":
