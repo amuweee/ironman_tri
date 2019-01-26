@@ -1,7 +1,7 @@
 import sqlite3
 
 
-conn = sqlite3.connect('ironman.db')
+conn = sqlite3.connect('../../ironman.db')
 c = conn.cursor()
 
 def create_table():
@@ -30,6 +30,8 @@ def create_table():
             Flag_DNS INTEGER,
             Flag_DNF INTEGER,
             Flag_DQ INTEGER,
+            Last_Name TEXT,
+            First_Name TEXT,
             Meta INTEGER,
             UNIQUE (Athelete_Name,
                     Distance,

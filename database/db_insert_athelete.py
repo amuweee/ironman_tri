@@ -31,7 +31,7 @@ def insert_athelete(bib):
 
     c.execute("""
         INSERT OR IGNORE INTO ironman_race
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (ath.athelete_name,
         ath.athelte_country,
         ath.rank_ag,
@@ -54,12 +54,14 @@ def insert_athelete(bib):
         ath.flag_dns,
         ath.flag_dnf,
         ath.flag_dq,
+        ath.last_name,
+        ath.first_name,
         dt))
 
 
 if __name__ == '__main__':
 
-    conn = sqlite3.connect('ironman.db')
+    conn = sqlite3.connect('../../ironman.db')
     c = conn.cursor()
 
     df = pd.read_csv(path+file, header=0)
