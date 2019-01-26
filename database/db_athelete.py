@@ -29,3 +29,5 @@ class athelete:
         self.flag_dns = bib[19]
         self.flag_dnf = bib[20]
         self.flag_dq = bib[21]
+        self.last_name = bib[22]
+        self.first_name = bib[23]
