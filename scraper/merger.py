@@ -70,16 +70,16 @@ def cleaner(df, out_path, out_csv):
         'Time_Finish': '---',
     }, '00:00:00')
 
-    df_clean3 = df_clean2.replace({'Time_Finish':'DNS'},'00:00:00')
-    df_clean4 = df_clean3.replace({'Time_Finish':'DNF'},'00:00:00')
-    df_end = df_clean4.replace({'Time_Finish':'DQ'},'00:00:00')
+    df_clean3 = df_clean2.replace({'Time_Finish': 'DNS'}, '00:00:00')
+    df_clean4 = df_clean3.replace({'Time_Finish': 'DNF'}, '00:00:00')
+    df_end = df_clean4.replace({'Time_Finish': 'DQ'}, '00:00:00')
 
     names = df_end['Athelete_Name'].str.split(', ', expand=True)
     df_end['Last_Name'] = names[0]
     df_end['First_Name'] = names[1]
 
     # save the cleaned DataFrame to csv at the defined path
-    df_end.to_csv(out_path+out_csv, index=False, header=True)
+    df_end.to_csv(out_path + out_csv, index=False, header=True)
 
 
 if __name__ == "__main__":
