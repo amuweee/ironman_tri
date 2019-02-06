@@ -1,3 +1,4 @@
+
 import pandas as pd
 import numpy as np
 import time
@@ -82,8 +83,7 @@ class race:
                         url_page += 1
                         time.sleep(1)
                     except ValueError:
-                        print(
-                            f'######### Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat} #########')
+                        print(f'Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat}')
                         break
 
         df_csv = pd.concat(results)

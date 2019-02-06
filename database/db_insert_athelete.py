@@ -26,8 +26,7 @@ def insert_athelete(bib):
 
     # timestamp for insert metadata
     unix = time.time()
-    dt = str(datetime.datetime.fromtimestamp(
-        unix).strftime('%Y-%m-%d %H:%M:%S'))
+    dt = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
 
     c.execute("""
         INSERT OR IGNORE INTO ironman_race

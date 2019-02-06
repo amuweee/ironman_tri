@@ -17,6 +17,8 @@ the SQLite database as insert columns
 
 in_path = '../../output_scraped/'
 out_path = '../../sanitized_data/'
+print("Type the input file name that contains data to export, could be a wild card")
+in_csv = input('> ')
 print("Type the output file name that contains data to export")
 print("make sure to add '.csv' file extension")
 out_csv = input('> ')
@@ -24,7 +26,7 @@ out_csv = input('> ')
 
 def merge_csv(in_path):
 
-    input_files = glob.glob(in_path + '*.csv')
+    input_files = glob.glob(in_path + in_csv)
     df = pd.DataFrame()
     l = []
     for file in input_files:
