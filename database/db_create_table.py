@@ -4,8 +4,10 @@ import sqlite3
 conn = sqlite3.connect('../../ironman.db')
 c = conn.cursor()
 
+
 def create_table():
 
+    # main table that houses scraped data
     c.execute("""
         CREATE TABLE IF NOT EXISTS ironman_race(
             Athelete_Name TEXT,
@@ -33,16 +35,17 @@ def create_table():
             Last_Name TEXT,
             First_Name TEXT,
             Meta INTEGER,
-            UNIQUE (Athelete_Name,
-                    Distance,
-                    Rank_Overall,
-                    Race_Date,
-                    Time_Swim,
-                    Time_Bike,
-                    Time_Run,
-                    Time_Finish,
-                    Race_Name)
-        )""")
+            UNIQUE (
+                Athelete_Name,
+                Distance,
+                Rank_Overall,
+                Race_Date,
+                Time_Swim,
+                Time_Bike,
+                Time_Run,
+                Time_Finish,
+                Race_Name)
+                )""")
 
     conn.commit()
 

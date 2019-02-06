@@ -1,3 +1,4 @@
+
 import pandas as pd
 import numpy as np
 import time
@@ -80,9 +81,9 @@ class race:
                         df['Age_Group'] = url_cat
                         results.append(df)
                         url_page += 1
-                        time.sleep(0.5)
+                        time.sleep(1)
                     except ValueError:
-                        print(f'######### Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat} #########')
+                        print(f'Imported {url_page} pages from {self.url_location} || {self.url_date} || {url_sex} {url_cat}')
                         break
 
         df_csv = pd.concat(results)
@@ -97,4 +98,4 @@ if __name__ == "__main__":
         r = race(instance)
         df_csv = r.scraper()
         name = f'{instance[5]}_{instance[7]}_{instance[9]}'
-        df_csv.to_csv(path+f"{name}.csv", index=False, header=True)
+        df_csv.to_csv(path + f"{name}.csv", index=False, header=True)
